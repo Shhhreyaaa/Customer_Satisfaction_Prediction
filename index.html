@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Satisfaction Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Customer Satisfaction Prediction</h1>
+    <p>Predict customer satisfaction based on support ticket details</p>
+
+    <form action="/predict_ui" method="post">
+
+        <div class="form-group">
+            <label>Customer Age</label>
+            <input type="number" name="Customer Age" placeholder="e.g. 45" required>
+        </div>
+
+        <div class="form-group">
+            <label>Customer Gender (0 = Female, 1 = Male)</label>
+            <select name="Customer Gender" required>
+                <option value="0">Female</option>
+                <option value="1">Male</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Product Purchased</label>
+            <input type="number" name="Product Purchased" placeholder="e.g. 4" required>
+        </div>
+
+        <div class="form-group">
+            <label>Ticket Type</label>
+            <input type="number" name="Ticket Type" placeholder="1 = Query, 2 = Complaint" required>
+        </div>
+
+        <div class="form-group">
+            <label>Ticket Priority</label>
+            <input type="number" name="Ticket Priority" placeholder="1 = Low, 2 = Medium, 3 = High" required>
+        </div>
+
+        <div class="form-group">
+            <label>Ticket Channel</label>
+            <input type="number" name="Ticket Channel" placeholder="1 = Email, 2 = Chat" required>
+        </div>
+
+        <div class="form-group">
+            <label>Ticket Status</label>
+            <input type="number" name="Ticket Status" placeholder="0 = Open, 1 = Closed" required>
+        </div>
+
+        <div class="form-group">
+            <label>Resolution Hours</label>
+            <input type="number" step="any" name="Resolution_Hours" placeholder="e.g. 12.5" required>
+        </div>
+
+        <button type="submit">Predict Satisfaction</button>
+    </form>
+
+    <!-- LEGEND BOX -->
+    <div class="legend">
+        <h3>Input Encoding Guide</h3>
+        <ul>
+            <li><b>Customer Gender:</b> 0 = Female, 1 = Male</li>
+            <li><b>Ticket Type:</b> 1 = Query, 2 = Complaint, 3 = Technical, 4 = Billing</li>
+            <li><b>Ticket Priority:</b> 1 = Low, 2 = Medium, 3 = High</li>
+            <li><b>Ticket Channel:</b> 1 = Email, 2 = Chat, 3 = Phone, 4 = App</li>
+            <li><b>Ticket Status:</b> 0 = Open, 1 = Closed</li>
+        </ul>
+    </div>
+
+    {% if prediction %}
+        <div class="result">
+            {{ prediction }}
+        </div>
+    {% endif %}
+
+    <p class="note">
+        Note: Inputs are label-encoded to match the training dataset.
+    </p>
+</div>
+
+</body>
+</html>
